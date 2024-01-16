@@ -5,5 +5,6 @@ $config['database'] = [
     'password' =>'mysql',
     'db' =>'php2test'
 ];
+
 define('_DB_CONFIG_',$config['database']);
 ?>

@@ -47,17 +47,24 @@ class  Projects extends Controller{
         $this->render('layouts/admin/admin_layout',$this->data);
     }
 
+    public function detail(){
+        $this->data['title'] = 'Chi tiết dự án';
+        $this->data['active']['url'] = $this->active;
+        $this->data['content'] = 'projects/detail';
+        $this->render('layouts/admin/admin_layout',$this->data);
+    }
+
     public function update($id = ''){
         echo $this->active;
         $data = $this->model->getDetail($id);
         $this->data['data']['productName'] = $data;
-        $this->data['title'] = 'Cập nhật Project';
+        $this->data['title'] = 'Cập nhật dự án';
         $this->data['content'] = 'projects/update';
         $this->render('layouts/admin/admin_layout',$this->data);
     }
 
     public function created(){
-        $this->data['title'] = 'Tạo Project';
+        $this->data['title'] = 'Tạo dự án';
         $this->data['active']['url'] = $this->active;
         $this->data['content'] = 'projects/created';
         $this->render('layouts/admin/admin_layout',$this->data);

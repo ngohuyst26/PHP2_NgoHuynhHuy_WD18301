@@ -26,7 +26,8 @@
                 <td>2024-12-31</td>
                 <td><span class="badge bg-info text-dark"><i class="bi bi-info-circle me-1"></i>Chuẩn bị</span></td>
                 <td>5 Tỷ VND</td>
-                <td><button type="button" class="btn btn-primary">Chi tiết</button>
+                <td>
+                    <a href="/du-an/detail" class="btn btn-primary">Chi tiết</a>
                     <button type="button" class="btn btn-warning">Chỉnh sửa</button>
                     <button type="button" class="btn btn-danger">Xóa</button>
                 </td>
@@ -39,7 +40,8 @@
                 <td>2024-11-30</td>
                 <td><span class="badge bg-info text-dark"><i class="bi bi-info-circle me-1"></i>Chuẩn bị</span></td>
                 <td>10 tỷ VNĐ</td>
-                <td><button type="button" class="btn btn-primary">Chi tiết</button>
+                <td>
+                    <a href="/du-an/detail" class="btn btn-primary">Chi tiết</a>
                     <button type="button" class="btn btn-warning">Chỉnh sửa</button>
                     <button type="button" class="btn btn-danger">Xóa</button>
                 </td>
@@ -52,7 +54,8 @@
                 <td>2024-10-15</td>
                 <td><span class="badge bg-info text-dark"><i class="bi bi-info-circle me-1"></i>Chuẩn bị</span></td>
                 <td>15 Tỷ VNĐ</td>
-                <td><button type="button" class="btn btn-primary">Chi tiết</button>
+                <td>
+                    <a href="/du-an/detail" class="btn btn-primary">Chi tiết</a>
                     <button type="button" class="btn btn-warning">Chỉnh sửa</button>
                     <button type="button" class="btn btn-danger">Xóa</button>
                 </td>
