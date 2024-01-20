@@ -115,24 +115,7 @@ class  App
 
     public function loadErrors($errors = '404')
     {
-        require '
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        Errors/' . $errors . '.php';
+        require_once __DIR_ROOT__."Errors/".$errors.".php";
     }
 
 }
