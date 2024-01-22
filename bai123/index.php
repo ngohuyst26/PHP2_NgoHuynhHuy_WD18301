@@ -16,7 +16,7 @@ $form = new Form();
 </head>
 <body>
     <div class="container">
-        <h1>Tạo tào khoảng</h1>
+        <h1>Tạo tào khoản</h1>
         <?php $form = Form::begin('','post'); ?>
         <div class="row">
             <div class="col">
