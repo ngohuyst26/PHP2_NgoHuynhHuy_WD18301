@@ -1,14 +1,19 @@
 <?php
-require_once '../vendor/autoload.php';
+require_once 'vendor/autoload.php';
 
-use App\src\Controller\BaseController;
-$controller = new BaseController();
-echo '<br>';
-use App\src\Model\BaseModel;
-$model  = new BaseModel();
-echo '<br>';
-use App\src\Core\Route;
-$route = new Route();
+use App\Model\ProductModel;
+
+$product = new ProductModel();
+
+$product->find(10);
+echo '</br>';
+$product->all();
+echo '</br>';
+$product->delete(20);
+echo '</br>';
+$product->update(30);
+echo '</br>';
+$product->created();
 
 
 ?>

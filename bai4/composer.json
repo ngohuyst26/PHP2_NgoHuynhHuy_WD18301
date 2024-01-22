@@ -3,7 +3,7 @@
     "description": "L?p trinh hu?ng d?i tu?ng",
     "autoload": {
         "psr-4": {
-            "App\\": "bai4/"
+            "App\\": "App/"
         }
     },
     "authors": [
