@@ -5,14 +5,23 @@ namespace App\Core;
 class Routes {
     protected $routes;
 
-    public function register(string $route, callable | array $action):self{
-        $this->routes[$route] = $action;
+    public function register(string $requestmethod,string $route, callable | array $action):self{
+        $this->routes[$requestmethod][$route] = $action;
         return $this;
     }
 
-    public function resolve($requesUrl){
+    public function get($route, $action){
+        return $this->register('get', $route , $action);
+    }
+
+
+    public function post($route, $action){
+        return $this->register('post', $route, $action);
+    }
+
+    public function resolve($requesUrl,$requestmethod){
         $route = explode('?',$requesUrl)[0];
-        $action = $this->routes[$route] ?? null;
+        $action = $this->routes[$requestmethod][$route] ?? null;
         if(!$action){
             echo 'Trang không tồn tại';
         }
@@ -24,7 +33,7 @@ class Routes {
             if(class_exists($class)){
                 $class = new $class();
                 if(method_exists($class,$method)){
-                    return call_user_func_array($class,$method,[]);
+                    return call_user_func_array([$class,$method],[]);
                 }
             }
         }
