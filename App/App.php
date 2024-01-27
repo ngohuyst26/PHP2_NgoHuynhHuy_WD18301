@@ -1,8 +1,12 @@
 <?php
+
+
 namespace App;
 use Core\Route;
 use Core\DB;
-class  App
+use Core\Request;
+
+class App
 {
     private $controller;
     private $action;
@@ -10,17 +14,20 @@ class  App
     private $route;
     private $route_config;
     private $_db;
+    private $_request;
 
     public function __construct()
     {
         $this->route_config = _ROUTE_CONFIG_;
         $this->route = new Route();
+        $this->_request = new Request();
         $this->controller = $this->route_config['default_router'];
         $this->action = 'index';
         $this->params = [];
         $this->_db = new DB();
         $this->_db = $this->_db->getDbCore();
         $this->handleUrl();
+
     }
 
     public function getUrl()
@@ -89,6 +96,7 @@ class  App
                 //Gán namespace cho biến $name_check để tạo đối tượng bằng namespace
                 $name_check = '\App\Controllers\\'.$name_check;
                 $this->controller = new $name_check;
+                $this->_request->setController($this->controller);
                 $this->controller->setDb($this->_db);
                 $this->controller->active = $url['key'];
                 unset($urlArray[0]);
@@ -113,9 +121,12 @@ class  App
         }
     }
 
+    public function getControler(){
+        return $this->controller;
+    }
     public function loadErrors($errors = '404')
     {
-        require_once __DIR_ROOT__."Errors/".$errors.".php";
+        require_once __DIR_ROOT__."/App/Errors/".$errors.".php";
     }
 
 }

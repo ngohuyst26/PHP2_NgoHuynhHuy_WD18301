@@ -8,6 +8,7 @@ class Connection{
     {
         $this->pdo_get_connection($config);
     }
+
     function pdo_get_connection($config){
         try {
             $conn = new PDO("mysql:host=".$config['host'].";dbname=".$config['db'], $config['user'], $config['password']);
@@ -19,6 +20,7 @@ class Connection{
             echo "Connection failed: " . $e->getMessage();
         }
     }
+
     public static function getInstance($config)
     {
         if (self::$instance == null)
@@ -26,7 +28,6 @@ class Connection{
             new Connection($config);
             self::$instance = self::$conn;
         }
-
         return self::$instance;
     }
 }

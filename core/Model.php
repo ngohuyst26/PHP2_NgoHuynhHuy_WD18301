@@ -1,6 +1,6 @@
 <?php
 namespace Core;
-abstract class Model extends  Database {
+abstract class Model extends  Database  implements ModelInterface {
     protected $db;
     public function __construct()
     {
@@ -10,6 +10,22 @@ abstract class Model extends  Database {
     protected abstract function tableName();
     protected abstract function fieldFill();
     protected abstract function findFill();
+
+    public function create(array $data){
+        $tableName = $this->tableName();
+        $field = '';
+        $value = '';
+        if(!empty($data)){
+            foreach ($data as $key => $valueInsert){
+                $field .= '`'.$key.'`'.',';
+                $value .= "'".$valueInsert."'".',';
+            }
+        }
+        $field = trim($field,',');
+        $value = trim($value,',');
+        $sql = "INSERT INTO $tableName ($field) VALUES ($value)";
+        $this->db->pdo_execute($sql);
+    }
 
     public function all(){
         $tableName = $this->tableName();
@@ -38,5 +54,25 @@ abstract class Model extends  Database {
         $data = $this->db->pdo_query_one($sql);
         return $data;
 
+    }
+
+    public function update($data=[],$field, $compare, $value){
+        $tableName = $this->tableName();
+        $set = '';
+        if(!empty($data)){
+            foreach ($data as $key => $valueInsert){
+                $set .= $key.' = '."'".$valueInsert."',";
+            }
+        }
+        $set = trim($set,',');
+        $sql = "UPDATE $tableName SET $set WHERE $field $compare $value";
+        $this->db->pdo_execute($sql);
+    }
+
+    public function delete($field = 'id', $compare = '=', $value){
+        $tableName = $this->tableName();
+
+        $sql = "DELETE FROM $tableName  WHERE $field $compare $value";
+        $this->db->pdo_execute($sql);
     }
 }

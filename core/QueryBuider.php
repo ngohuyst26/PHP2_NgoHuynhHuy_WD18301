@@ -116,7 +116,6 @@ trait QueryBuider{
     }
     $set = trim($set,',');
     $sql = "UPDATE $this->tableName SET $set $this->whereField";
-    echo $sql;
     $this->pdo_execute($sql);
     }
 

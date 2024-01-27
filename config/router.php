@@ -15,5 +15,6 @@ $router['vat-lieu'] = 'materials/index';
 $router['vat-lieu/list'] = 'materials/lists';
 $router['vat-lieu/created'] = 'materials/created';
 $router['vat-lieu/update'] = 'materials/update';
+
 define('_ROUTE_CONFIG_',$router);
 ?>

@@ -28,5 +28,5 @@ use App\App;
 //    }
 //}
 $app = new App();
-
-?>
+//var_dump($app->getControler());
+//var_dump($app->getControler());
