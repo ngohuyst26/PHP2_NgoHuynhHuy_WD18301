@@ -5,7 +5,7 @@ namespace App\Core;
 class Routes {
     protected $routes;
 
-    public function register(string $requestmethod,string $route, callable | array $action):self{
+    public function register( $requestmethod, $route, $action){
         $this->routes[$requestmethod][$route] = $action;
         return $this;
     }
