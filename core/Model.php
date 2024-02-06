@@ -1,7 +1,9 @@
 <?php
 namespace Core;
-abstract class Model extends  Database  implements ModelInterface {
+abstract class Model extends Database implements ModelInterface {
+
     protected $db;
+
     public function __construct()
     {
         $this->db = new Database();
@@ -49,8 +51,7 @@ abstract class Model extends  Database  implements ModelInterface {
         if(empty($findFill)){
             $findFill = 'id';
         }
-        $sql = "SELECT $fieldFill FROM $tableName WHERE $findFill = $id";
-        echo $sql;
+        $sql = "SELECT $fieldFill FROM $tableName WHERE $findFill = '$id'";
         $data = $this->db->pdo_query_one($sql);
         return $data;
 
@@ -65,7 +66,7 @@ abstract class Model extends  Database  implements ModelInterface {
             }
         }
         $set = trim($set,',');
-        $sql = "UPDATE $tableName SET $set WHERE $field $compare $value";
+        $sql = "UPDATE $tableName SET $set WHERE $field $compare '$value'";
         $this->db->pdo_execute($sql);
     }
 

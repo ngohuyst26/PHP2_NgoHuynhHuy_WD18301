@@ -1,6 +1,7 @@
 <?php
 namespace Core;
 trait QueryBuider{
+
     public $tableName = '';
     public $selectField = '*';
     public $whereField = '';
@@ -32,7 +33,7 @@ trait QueryBuider{
         }else{
             $this->operator = ' AND ';
         }
-        $this->whereField .= "$this->operator $field $compare $value";
+        $this->whereField .= "$this->operator $field $compare '$value'";
         return $this;
     }
 
@@ -91,23 +92,25 @@ trait QueryBuider{
         return $this->pdo_query_one($sql);
     }
 
-    public function insert($data=[]){
+    public function insert($data){
         $field = '';
         $value = '';
+        $mark = '';
         if(!empty($data)){
             foreach ($data as $key => $valueInsert){
                 $field .= '`'.$key.'`'.',';
-                $value .= "'".$valueInsert."'".',';
+                $value .= $valueInsert.',';
+                $mark .="?,";
             }
         }
+        $mark = trim($mark,',');
         $field = trim($field,',');
         $value = trim($value,',');
-        $sql = "INSERT INTO $this->tableName ($field) VALUES ($value)";
-        $this->pdo_execute($sql);
+        $sql  = "INSERT INTO $this->tableName ($field) VALUES ($mark)";
+        $this->pdo_execute($sql,$value);
     }
 
-    public function update($data=[],$field, $compare, $value){
-    $this->where($field, $compare, $value);
+    public function updateQuery(array $data=[]){
     $set = '';
     if(!empty($data)){
         foreach ($data as $key => $valueInsert){
@@ -116,6 +119,7 @@ trait QueryBuider{
     }
     $set = trim($set,',');
     $sql = "UPDATE $this->tableName SET $set $this->whereField";
+    echo $sql;
     $this->pdo_execute($sql);
     }
 

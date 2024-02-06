@@ -2,6 +2,7 @@
 
 
 namespace App;
+use App\Middlewares\AuthMiddleware;
 use Core\Route;
 use Core\DB;
 use Core\Request;
@@ -15,11 +16,12 @@ class App
     private $route_config;
     private $_db;
     private $_request;
-
+    private $_authmiddleware;
     public function __construct()
     {
         $this->route_config = _ROUTE_CONFIG_;
         $this->route = new Route();
+        $this->_authmiddleware = new AuthMiddleware();
         $this->_request = new Request();
         $this->controller = $this->route_config['default_router'];
         $this->action = 'index';
@@ -45,6 +47,7 @@ class App
     {
         $url = $this->getUrl();
         $url = $this->route->handleRoute($url);
+        $this->_authmiddleware->handel();
         $urlArray = array_filter(explode('/', $url['url']));
         $urlArray = array_values($urlArray);
         //Dùng để kiểm tra đường dẫn có file thật không mục đính là tìm file controller dụa vào đường dẫn
@@ -114,8 +117,9 @@ class App
             $this->params = array_values($urlArray);
         }
 
+
         if (method_exists($this->controller, $this->action)) {
-            call_user_func_array([$this->controller, $this->action], $this->params);
+            call_user_func_array([$this->controller, $this->action], [$this->params]);
         } else {
             $this->loadErrors();
         }

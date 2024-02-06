@@ -16,7 +16,7 @@ class  Projects extends Controller{
     }
 
     public function index(){
-        $this->lists();
+//        $this->lists();
         echo $this->active;
 
     }
@@ -38,15 +38,15 @@ class  Projects extends Controller{
     }
 
     public function lists(){
-        $data = $this->model->getList();
-        $this->data['data']['listProduct'] = $data;
+        $this->model->getList();
+//        $this->data['data']['listProduct'] = $data;
         $this->data['title'] = 'Danh sách dự án';
         $this->data['active']['url'] = $this->active;
         $this->data['content'] = 'projects/list';
         $this->render('layouts/admin/admin_layout',$this->data);
     }
 
-    public function detail(){
+    public function detail($data = []){
         $this->data['title'] = 'Chi tiết dự án';
         $this->data['active']['url'] = $this->active;
         $this->data['content'] = 'projects/detail';

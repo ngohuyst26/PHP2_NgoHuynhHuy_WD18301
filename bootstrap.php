@@ -1,6 +1,5 @@
 <?php
 define('__DIR_ROOT__', __DIR__);
-
 if(!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on'){
     $web_root = 'https://'.$_SERVER['HTTP_HOST'].'/';
 }else{
@@ -8,6 +7,14 @@ if(!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on'){
 }
 
 define('__WEB_ROOT__',$web_root);
+use Core\Mailer;
+
+$email_vars = array(
+    'webroot' => __WEB_ROOT__,
+    'code' => 'huhsuha'
+);
+
+
 
 $config_dir = scandir('config');
 //Tự động require các file config vào
@@ -18,15 +25,15 @@ if(!empty($config_dir)){
         }
     }
 }
+require_once 'core\Helpers.php';
+
+//$data = [
+//    'code' => 'hahaha'
+//];
+//
+//$content = get_template_email($data,'email_verypassword');
+//$mail = new Mailer();
+//$mail->recipients('Ngô Huy','ngohuyst77@gmail.com')->content('Test template', $content)->send();
 
 use App\App;
-//if(!empty($config['database'])){
-//    $db_config = array_filter($config['database']);
-//    if(!empty($db_config)){
-//        require_once 'core/Connection.php';
-//        require_once 'core/Database.php';
-//    }
-//}
 $app = new App();
-//var_dump($app->getControler());
-//var_dump($app->getControler());

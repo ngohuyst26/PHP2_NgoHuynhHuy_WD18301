@@ -4,14 +4,14 @@ use PDO;
 class Connection{
     private static $instance = null ;
     private static $conn = null;
-    private function __construct($config)
+    private function __construct()
     {
-        $this->pdo_get_connection($config);
+        $this->pdo_get_connection();
     }
 
-    function pdo_get_connection($config){
+    function pdo_get_connection(){
         try {
-            $conn = new PDO("mysql:host=".$config['host'].";dbname=".$config['db'], $config['user'], $config['password']);
+            $conn = new PDO("mysql:host=".$_ENV['HOST'].";dbname=".$_ENV['DB'], $_ENV['USER'], $_ENV['PASSWORD']);
             // set the PDO error mode to exception
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             // echo "Connected successfully";
@@ -21,11 +21,11 @@ class Connection{
         }
     }
 
-    public static function getInstance($config)
+    public static function getInstance()
     {
         if (self::$instance == null)
         {
-            new Connection($config);
+            new Connection();
             self::$instance = self::$conn;
         }
         return self::$instance;

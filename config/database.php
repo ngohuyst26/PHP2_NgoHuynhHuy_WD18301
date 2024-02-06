@@ -3,7 +3,7 @@ $config['database'] = [
     'host' => 'localhost',
     'user' => 'root',
     'password' =>'mysql',
-    'db' =>'php2_oop'
+    'db' =>'php2test'
 ];
 
 define('_DB_CONFIG_',$config['database']);

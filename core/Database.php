@@ -1,13 +1,14 @@
 <?php
 namespace Core;
 use PDO;
+use PDOException;
 class Database
 {
     private $conn;
     //Cách gọi trait
     use QueryBuider;
     public function __construct(){
-        $this->conn = Connection::getInstance(_DB_CONFIG_);
+        $this->conn = Connection::getInstance();
     }
 
     //Hàm dùng để thêm xóa sửa
@@ -19,8 +20,9 @@ class Database
     function pdo_execute($sql)
     {
         $sql_args = array_slice(func_get_args(), 1);
+        $sql_args = reset($sql_args);
+        $sql_args = explode(',',$sql_args);
         try {
-
             $stmt = $this->conn->prepare($sql);
             $stmt->execute($sql_args);
         } catch (PDOException $e) {
@@ -39,7 +41,6 @@ class Database
     {
         $sql_args = array_slice(func_get_args(), 1);
         try {
-
             $stmt = $this->conn->prepare($sql);
             $stmt->execute($sql_args);
             $rows = $stmt->fetchAll();

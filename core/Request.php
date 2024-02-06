@@ -3,7 +3,6 @@
 
 namespace Core;
 
-use App\App;
 use Exception;
 
 class Request
@@ -127,6 +126,45 @@ class Request
                         }
                     }
 
+                    if($ruleName == 'match'){
+                        if(!empty($rules[1])){
+                            if($dataField[$rules[1]] != $dataField[$nameField]){
+                                $this->getError($nameField, $ruleName);
+                                $validate = true;
+                            }
+                        }
+                    }
+
+                    if ($ruleName == 'email'){
+                        if (!empty($dataField[$nameField])){
+                            $check = preg_match ("/^([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+\.[A-Za-z]{2,6}$/", $dataField[$nameField]);
+                            if (!$check){
+                                $this->getError($nameField, $ruleName);
+                                $validate = true;
+                            }
+                        }
+                    }
+
+                    if ($ruleName == 'phone'){
+                        if (!empty($dataField[$nameField])){
+                            $check = preg_match ("/^(032|033|034|035|036|037|038|039|096|097|098|086|083|084|085|081|082|088|091|094|070|079|077|076|078|090|093|089|056|058|092|059|099)[0-9]{7}$/", $dataField[$nameField]);
+                            if (!$check){
+                                $this->getError($nameField, $ruleName);
+                                $validate = true;
+                            }
+                        }
+                    }
+
+                    if ($ruleName == 'password'){
+                        if (!empty($dataField[$nameField])){
+                            $check = preg_match ("/^.*(?=.*[A-Z])(?=.*[0-9])(?=.*[a-z].*[a-z])(?=.*[@\!\$\^\&\*]).{8,}$/", $dataField[$nameField]);
+                            if (!$check){
+                                $this->getError($nameField, $ruleName);
+                                $validate = true;
+                            }
+                        }
+                    }
+
                     if ($ruleName == 'unique') {
                         $check = null;
                         if (count($rules) == 3 && !empty($dataField[$nameField])) {
@@ -154,6 +192,22 @@ class Request
                         }
                     }
 
+
+                    if ($ruleName == 'exist') {
+                        $check = null;
+                        if (count($rules) == 3 && !empty($dataField[$nameField])) {
+                            $nameTable = $rules[1];
+                            $fieldCheck = $rules[2];
+                            $dataField[$nameField] = trim($dataField[$nameField]);
+                            $check = $this->_db->pdo_query("SELECT $fieldCheck FROM $nameTable WHERE $fieldCheck = '$dataField[$nameField]'");
+                        }
+                        if (empty($check)) {
+                            $this->getError($nameField, $ruleName);
+                            $validate = true;
+                        }
+                    }
+
+
                     if (preg_match("~^callback_(.+)~is", $ruleName, $nameFunc)) {
                         $nameFunc = $nameFunc[1];
                         if (method_exists(self::$_controller, $nameFunc)) {
@@ -165,8 +219,21 @@ class Request
                         }
                     }
 
+                    if (preg_match("~^callbackcheck_(.+)~is", $ruleName, $nameFunc)) {
+                        $nameFunc = $nameFunc[1];
+                        if (method_exists(self::$_controller, $nameFunc)) {
+                            $check = self::$_controller->$nameFunc();
+                            if (!$check) {
+                                $this->getError($nameField, $ruleName);
+                                $validate = true;
+                            }
+                        }
+                    }
                 }
             }
+            $sessionKey = Session::isVali();
+            Session::flash($sessionKey.'_errors', $this->errors());
+            Session::flash($sessionKey.'_value',$this->getField());
             return $validate;
         }
     }
