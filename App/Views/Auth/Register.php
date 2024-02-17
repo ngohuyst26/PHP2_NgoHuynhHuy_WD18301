@@ -69,36 +69,36 @@
                                 <form class="row g-3 needs-validation" action="/post_user" method="post" novalidate>
                                     <div class="col-12">
                                         <label for="yourName" class="form-label">Họ Tên</label>
-                                        <input type="text" name="name" value="<?= form_value('name') ?>" class="form-control" id="yourName" >
+                                        <input type="text" name="name" value="<?= form_value('name') ?>" class="form-control" id="yourName" autofocus tabindex="1">
                                         <?= form_errors('name', '<span style="color: red;">', '</span>') ?>
                                     </div>
 
                                     <div class="col-12">
                                         <label for="yourEmail" class="form-label">Địa chỉ email</label>
-                                        <input type="text" name="email" value="<?= form_value('email') ?>" class="form-control" id="yourEmail" >
+                                        <input type="text" name="email" value="<?= form_value('email') ?>" class="form-control" id="yourEmail" tabindex="2">
                                         <?= form_errors('email', '<span style="color: red;">', '</span>') ?>
                                     </div>
 
                                     <div class="col-12">
                                         <label for="yourName" class="form-label">Số điện thoại</label>
-                                        <input type="text" name="phone" value="<?= form_value('phone') ?>" class="form-control" id="yourName" >
+                                        <input type="text" name="phone" value="<?= form_value('phone') ?>" class="form-control" id="yourName" tabindex="3">
                                         <?= form_errors('phone', '<span style="color: red;">', '</span>') ?>
                                     </div>
 
                                     <div class="col-12">
                                         <label for="yourPassword" class="form-label">Mật khẩu</label>
-                                        <input type="password" name="password" value="<?= form_value('password') ?>" class="form-control" id="yourPassword" >
+                                        <input type="password" name="password" value="<?= form_value('password') ?>" class="form-control" id="yourPassword" tabindex="4">
                                         <?= form_errors('password', '<span style="color: red;">', '</span>') ?>
                                     </div>
 
                                     <div class="col-12">
                                         <label for="yourPassword" class="form-label">Nhập lại mật khẩu</label>
-                                        <input type="password" name="confirm_password" value="<?= form_value('confirm_password') ?>" class="form-control" id="yourPassword" >
+                                        <input type="password" name="confirm_password" value="<?= form_value('confirm_password') ?>" class="form-control" id="yourPassword" tabindex="5">
                                         <?= form_errors('confirm_password', '<span style="color: red;">', '</span>') ?>
                                     </div>
 
                                     <div class="col-12">
-                                        <button class="btn btn-primary w-100 mt-3" type="submit" name="register">Tạo tài khoản</button>
+                                        <button class="btn btn-primary w-100 mt-3" type="submit" name="register" tabindex="6">Tạo tài khoản</button>
                                     </div>
                                     <div class="col-12">
                                         <p class="small mb-0">Bạn đã có tài khoản? <a href="/dang-nhap">Đăng nhập</a></p>

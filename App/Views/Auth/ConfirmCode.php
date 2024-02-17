@@ -66,7 +66,7 @@
                                     <div class="input-group has-validation">
                                         <input type="hidden" name="email" value="<?= (!empty($email)?$email:false) ?>">
                                         <input type="text" name="code" class="form-control"
-                                               value="<?= form_value('code') ?>" id="yourUsername">
+                                               value="<?= form_value('code') ?>" id="yourUsername" autofocus>
                                     </div>
                                     <?= (!empty($invalid_errors_code)?'<span style="color: red;">'.$invalid_errors_code.'</span>':false) ?>
                                     <?= form_errors('code', '<span style="color: red;">', '</span>') ?>
@@ -74,13 +74,13 @@
 
                                 <div class="col-12">
                                     <label for="yourPassword" class="form-label">Mật khẩu mới</label>
-                                    <input type="password" name="password" value="<?= form_value('password') ?>" class="form-control" id="yourPassword" >
+                                    <input type="password" name="password" value="<?= form_value('password') ?>" class="form-control" id="yourPassword" tabindex="1" >
                                     <?= form_errors('password', '<span style="color: red;">', '</span>') ?>
                                 </div>
 
                                 <div class="col-12">
                                     <label for="yourPassword" class="form-label">Nhập lại mật khẩu</label>
-                                    <input type="password" name="confirm_password" value="<?= form_value('confirm_password') ?>" class="form-control" id="yourPassword" >
+                                    <input type="password" name="confirm_password" value="<?= form_value('confirm_password') ?>" class="form-control" id="yourPassword" tabindex="2">
                                     <?= form_errors('confirm_password', '<span style="color: red;">', '</span>') ?>
                                 </div>
 

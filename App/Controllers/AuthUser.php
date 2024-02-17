@@ -37,7 +37,7 @@ class AuthUser extends Controller
 
     public function postUser()
     {
-        if($this->_request->isPost()) {
+        if ($this->_request->isPost()) {
             $field = $this->_request->getField();
             $this->_name = $field['name'];
             $this->_email = $field['email'];
@@ -68,15 +68,15 @@ class AuthUser extends Controller
             ]);
 
             if ($this->_request->validate()) {
-                set_toast('invalid_register','Tạo tài khoản thất bại');
+                set_toast('invalid_register', 'Tạo tài khoản thất bại');
                 $this->_response->redirect('dang-ky');
             }
             if (!$this->_request->validate()) {
                 $this->_repo->register($field);
-                set_toast('isvalid_register','Tạo tài khoản thành công');
+                set_toast('isvalid_register', 'Tạo tài khoản thành công');
                 $this->_response->redirect('dang-nhap');
             }
-        }else{
+        } else {
             $this->_response->redirect('dang-ky');
         }
     }
@@ -108,15 +108,15 @@ class AuthUser extends Controller
 
             if ($this->_request->validate()) {
                 Session::flash('errors', $this->_request->errors());
-                set_toast('invalid_login',$this->_request->errors()['check']);
+                set_toast('invalid_login', $this->_request->errors()['check']);
                 $this->_response->redirect('dang-nhap');
             }
 
             if (!$this->_request->validate()) {
-                set_toast('isvalid_login','Đăng nhập thành công');
-                $this->_response->redirect('du-an');
+                set_toast('isvalid_login', 'Đăng nhập thành công');
+                $this->_response->redirect('dashboard');
             }
-        }else{
+        } else {
             $this->_response->redirect('dang-nhap');
         }
     }
@@ -128,19 +128,21 @@ class AuthUser extends Controller
 
     public function logout()
     {
-        if (isset($_SESSION['user'])) {
-            unset($_SESSION['user']);
-            set_toast('isvalid_logout','Đăng xuất thành công');
+        if (!empty(Session::data('user'))) {
+            Session::delete('user');
+            set_toast('isvalid_logout', 'Đăng xuất thành công');
             $this->_response->redirect('dang-nhap');
         }
     }
 
-    public function forgotPassword(){
+    public function forgotPassword()
+    {
         $this->render('Auth/ForgotPassword');
     }
 
-    public function postForgot(){
-        if($this->_request->isPost()){
+    public function postForgot()
+    {
+        if ($this->_request->isPost()) {
             $field = $this->_request->getField();
             $this->_email = $field['email'];
 
@@ -156,41 +158,58 @@ class AuthUser extends Controller
             ]);
 
             if ($this->_request->validate()) {
-                set_toast('inforgot','Gửi yêu cầu thất bại');
+                set_toast('inforgot', 'Gửi xác nhận thất bại');
                 $this->_response->redirect('quen-mat-khau');
             }
 
             if (!$this->_request->validate()) {
                 $email = $this->_repo->addCodeVery($this->_email);
-                if($email){
+                if ($email) {
                     $this->_response->redirect("xac-nhan?email=$email");
-                }else{
+                } else {
                     $this->_response->redirect('quen-mat-khau');
                 }
             }
 
-        }else{
+        } else {
             $this->_response->redirect('quen-mat-khau');
         }
     }
 
-    public function confirmCode(){
+    public function confirmCode()
+    {
         $field = $this->_request->getField();
-        if(!empty($field['email'])){
-            $this->_data['invalid_errors_code'] = Session::flash('invalid_errors_code');
-            $this->_data['email'] = $field['email'];
-            $this->render('Auth/ConfirmCode',$this->_data);
-            return true;
+
+        $this->_request->rule([
+            'email' => "required|email|max:100|exist:staff:email",
+        ]);
+
+        $this->_request->message([
+            'email.required' => 'Email không được để trống',
+            'email.max' => 'Email không được lớn hơn 100 kí tự',
+            'email.email' => 'Email không đúng định dạng',
+            'email.exist' => 'Email không tồn tại trong hệ thống',
+        ]);
+
+        if ($this->_request->validate()) {
+            set_toast('no_email', 'Đã sảy ra lỗi trong quá trình xác nhận');
+            $this->_response->redirect('quen-mat-khau');
         }
-        set_toast('no_email','Đã sảy ra lỗi trong quá trình xác nhận');
-        $this->_response->redirect('quen-mat-khau');
+        if (!$this->_request->validate()) {
+            if (!empty($field['email'])) {
+                $this->_data['invalid_errors_code'] = Session::flash('invalid_errors_code');
+                $this->_data['email'] = $field['email'];
+                $this->render('Auth/ConfirmCode', $this->_data);
+            }
+        }
     }
 
-    public function postCode(){
+    public function postCode()
+    {
         $field = $this->_request->getField();
         $this->_request->rule([
             'email' => "required|email|max:100|exist:staff:email",
-            'code' =>'required',
+            'code' => 'required',
             'password' => 'required|password|min:8',
             'confirm_password' => 'required|match:password'
         ]);
@@ -200,7 +219,7 @@ class AuthUser extends Controller
             'email.max' => 'Email không được lớn hơn 100 kí tự',
             'email.email' => 'Email không đúng định dạng',
             'email.exist' => 'Email không tồn tại trong hệ thống',
-            'code.required' =>'Code không được để trống',
+            'code.required' => 'Code không được để trống',
             'password.required' => 'Mật khẩu không được để trống',
             'password.password' => 'Mật khẩu cần có ít nhất 1 kí tự viết hoa 1 kí tự đặt biệt và 2 ký tự thường và 2 kí tự số!',
             'password.min' => 'Mật khẩu phải dài trên 8 kí tự',
@@ -209,24 +228,26 @@ class AuthUser extends Controller
         ]);
 
         if ($this->_request->validate()) {
-            set_toast('invalid_code_valid','Xác nhận thất bại');
-            $this->_response->redirect('xac-nhan?email='.$field['email']);
+            set_toast('invalid_code_valid', 'Xác nhận thất bại');
+            $this->_response->redirect('xac-nhan?email=' . $field['email']);
         }
 
-        if(!$this->_request->validate()){
-            $check = $this->_repo->checkCodeVery($field['email'],$field['code'],$field['password']);
-            if(!$check){
-                Session::flash('invalid_errors_code','Mã xác nhận không đúng rồi!');
-                set_toast('invalid_code','Mã xác nhận không đúng');
-                $this->_response->redirect('xac-nhan?email='.$field['email']);
+        if (!$this->_request->validate()) {
+            $check = $this->_repo->checkCodeVery($field['email'], $field['code'], $field['password']);
+            if (!$check) {
+                Session::flash('invalid_errors_code', 'Mã xác nhận không đúng rồi!');
+                set_toast('invalid_code', 'Mã xác nhận không đúng');
+                $this->_response->redirect('xac-nhan?email=' . $field['email']);
             }
-            set_toast('isvalid_code','Xác nhận thành công');
+            set_toast('isvalid_code', 'Xác nhận thành công');
+            if (Session::data('user')) {
+                $this->_response->redirect('dashboard');
+            }
             $this->_response->redirect('dang-nhap');
 
         }
 
     }
-
 
 
 }

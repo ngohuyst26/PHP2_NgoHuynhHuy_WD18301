@@ -17,16 +17,21 @@ abstract class Model extends Database implements ModelInterface {
         $tableName = $this->tableName();
         $field = '';
         $value = '';
-        if(!empty($data)){
-            foreach ($data as $key => $valueInsert){
-                $field .= '`'.$key.'`'.',';
-                $value .= "'".$valueInsert."'".',';
+        $mark = '';
+        if (!empty($data)) {
+            foreach ($data as $key => $valueInsert) {
+                $field .= '`' . $key . '`' . ',';
+                $value .= "'".$valueInsert."',";
+                $mark .= "?,";
             }
         }
-        $field = trim($field,',');
-        $value = trim($value,',');
-        $sql = "INSERT INTO $tableName ($field) VALUES ($value)";
-        $this->db->pdo_execute($sql);
+
+        $mark = trim($mark, ',');
+        $field = trim($field, ',');
+        $value = trim($value, ',');
+//        preg_match_all("/'(.*?)'/",$value,$valueString);
+        $sql = "INSERT INTO $tableName ($field) VALUES ($mark)";
+        $this->db->pdo_execute($sql, $value);
     }
 
     public function all(){
@@ -35,7 +40,7 @@ abstract class Model extends Database implements ModelInterface {
         if(empty($fieldFill)){
             $fieldFill = '*';
         }
-        $sql = "SELECT $fieldFill FROM $tableName";
+        $sql = "SELECT $fieldFill FROM $tableName ORDER BY id DESC";
         $data = $this->db->pdo_query($sql);
         return $data;
     }
@@ -57,23 +62,26 @@ abstract class Model extends Database implements ModelInterface {
 
     }
 
-    public function update($data=[],$field, $compare, $value){
+    public function update( array $data ,$field, $compare, $value){
         $tableName = $this->tableName();
         $set = '';
+        $dataUpdate = '';
         if(!empty($data)){
             foreach ($data as $key => $valueInsert){
-                $set .= $key.' = '."'".$valueInsert."',";
+                $set .= $key.' = '."?,";
+                $dataUpdate .= "'".$valueInsert."',";
             }
         }
         $set = trim($set,',');
+        $dataUpdate = trim($dataUpdate,',');
         $sql = "UPDATE $tableName SET $set WHERE $field $compare '$value'";
-        $this->db->pdo_execute($sql);
+        $this->db->pdo_execute($sql,$dataUpdate);
     }
 
-    public function delete($field = 'id', $compare = '=', $value){
+    public function delete( string | int $value, string $field = 'id', string $compare = '='){
         $tableName = $this->tableName();
-
         $sql = "DELETE FROM $tableName  WHERE $field $compare $value";
         $this->db->pdo_execute($sql);
     }
+
 }

@@ -16,6 +16,7 @@
     <!-- Google Fonts -->
     <link href="https://fonts.gstatic.com" rel="preconnect">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.17/js/bootstrap-select.min.js">-->
 
     <!-- Vendor CSS Files -->
     <script src="<?= __WEB_ROOT__ ?>public/assets/js/jquery-3.7.1.min.js"></script>
@@ -27,9 +28,12 @@
     <link href="<?=__WEB_ROOT__?>public/assets/vendor/remixicon/remixicon.css" rel="stylesheet">
     <link href="<?=__WEB_ROOT__?>public/assets/vendor/simple-datatables/style.css" rel="stylesheet">
     <link href="<?=__WEB_ROOT__?>public/assets/css/toastr.min.css" rel="stylesheet">
+    <link href="<?=__WEB_ROOT__?>public/assets/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="<?=__WEB_ROOT__?>public/assets/css/bootstrap-select.min.css">
+<!--    <script src="https://cdn.ckeditor.com/ckeditor5/41.1.0/classic/ckeditor.js"></script>-->
+    <script src="<?= __WEB_ROOT__ ?>public/assets/js/ckeditor/ckeditor.js"></script>
 
     <!-- Template Main CSS File -->
-    <link href="<?=__WEB_ROOT__?>public/assets/css/style.css" rel="stylesheet">
 
     <!-- =======================================================
     * Template Name: NiceAdmin
@@ -39,7 +43,7 @@
     * License: https://bootstrapmade.com/license/
     ======================================================== -->
 </head>
-<body>
+<body >
 
 <!-- ======= Header ======= -->
 <header id="header" class="header fixed-top d-flex align-items-center">
@@ -47,7 +51,7 @@
     <div class="d-flex align-items-center justify-content-between">
         <a href="index.html" class="logo d-flex align-items-center">
             <img src="<?=__WEB_ROOT__?>public/assets/img/logo.png" alt="">
-            <span class="d-none d-lg-block">NiceAdmin</span>
+            <span class="d-none d-lg-block">Dự án xây dựng</span>
         </a>
         <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
@@ -213,12 +217,12 @@
 
                 <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
                     <img src="<?=__WEB_ROOT__?>public/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-                    <span class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
+                    <span class="d-none d-md-block dropdown-toggle ps-2">Ngô Huy</span>
                 </a><!-- End Profile Iamge Icon -->
 
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                     <li class="dropdown-header">
-                        <h6>Kevin Anderson</h6>
+                        <h6>Ngô Huy</h6>
                         <span>Web Designer</span>
                     </li>
                     <li>
@@ -228,7 +232,7 @@
                     <li>
                         <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
                             <i class="bi bi-person"></i>
-                            <span>My Profile</span>
+                            <span>Thông tin tài khoản</span>
                         </a>
                     </li>
                     <li>
@@ -238,19 +242,13 @@
                     <li>
                         <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
                             <i class="bi bi-gear"></i>
-                            <span>Account Settings</span>
+                            <span>Cài đặt</span>
                         </a>
                     </li>
                     <li>
                         <hr class="dropdown-divider">
                     </li>
 
-                    <li>
-                        <a class="dropdown-item d-flex align-items-center" href="pages-faq.html">
-                            <i class="bi bi-question-circle"></i>
-                            <span>Need Help?</span>
-                        </a>
-                    </li>
                     <li>
                         <hr class="dropdown-divider">
                     </li>

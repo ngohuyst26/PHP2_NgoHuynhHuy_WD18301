@@ -66,7 +66,7 @@
                                     <div class="input-group has-validation">
                                         <span class="input-group-text" id="inputGroupPrepend">@</span>
                                         <input type="text" name="email" class="form-control"
-                                               value="<?= form_value('email') ?>" id="yourUsername">
+                                               value="<?= form_value('email') ?>" id="yourUsername" autofocus>
                                     </div>
                                     <?= form_errors('email', '<span style="color: red;">', '</span>') ?>
                                 </div>
@@ -129,6 +129,7 @@
         "showMethod": "fadeIn",
         "hideMethod": "fadeOut"
     }
+    <?= show_toast('inforgot','error','Thất bại') ?>
     <?= show_toast('no_email','error','Thất bại') ?>
     <?= show_toast('issend') ?>
     <?= show_toast('insend','error','Thất bại') ?>

@@ -295,7 +295,7 @@
                                                                  arcsize="0%" stroke="f" fillcolor="#ffc25e">
                                                         <w:anchorlock/>
                                                         <center style="color:#000000;"><![endif]-->
-                                                    <a href="{WEBROOT}xac-nhan" target="_blank"
+                                                    <a href="{WEBROOT}xac-nhan?email={EMAIL}" target="_blank"
                                                        class="v-button v-size-width"
                                                        style="box-sizing: border-box;display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #000000; background-color: #ffc25e; border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px; width:42%; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;font-size: 14px;">
                                                         <span style="display:block;padding:10px 20px;line-height:120%;"><span

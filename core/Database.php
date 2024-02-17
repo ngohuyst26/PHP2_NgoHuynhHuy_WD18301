@@ -1,13 +1,18 @@
 <?php
+
 namespace Core;
+
 use PDO;
 use PDOException;
+
 class Database
 {
     private $conn;
     //Cách gọi trait
     use QueryBuider;
-    public function __construct(){
+
+    public function __construct()
+    {
         $this->conn = Connection::getInstance();
     }
 
@@ -20,11 +25,15 @@ class Database
     function pdo_execute($sql)
     {
         $sql_args = array_slice(func_get_args(), 1);
+
         $sql_args = reset($sql_args);
-        $sql_args = explode(',',$sql_args);
+////        $sql_args = explode(',',$sql_args);
+//        echo $sql_args;
+//        $sql_args = implode(',',$sql_args);
+        preg_match_all("/'(.*?)'/",$sql_args,$valueString);
         try {
             $stmt = $this->conn->prepare($sql);
-            $stmt->execute($sql_args);
+            $stmt->execute($valueString[1]);
         } catch (PDOException $e) {
             throw $e;
         } finally {

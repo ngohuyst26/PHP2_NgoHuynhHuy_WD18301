@@ -6,7 +6,7 @@ use Core\Model;
 
 class AutUser extends Model {
     private $_table = 'staff';
-    private $_field = 'name,email,code_very,password,phone,position_id,department';
+    private $_field = 'id,name,email,code_very,password,phone,position_id,department';
     private $_find = 'email';
 
     protected function tableName(){
@@ -32,7 +32,7 @@ class AutUser extends Model {
         $this->create($data);
     }
 
-    public function CodeVery($email,$code = null){
+    public function CodeVery(string $email, string $code = ''){
         $data = [
             'code_very' => $code
         ];

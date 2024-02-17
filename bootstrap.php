@@ -7,13 +7,6 @@ if(!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on'){
 }
 
 define('__WEB_ROOT__',$web_root);
-use Core\Mailer;
-
-$email_vars = array(
-    'webroot' => __WEB_ROOT__,
-    'code' => 'huhsuha'
-);
-
 
 
 $config_dir = scandir('config');
@@ -25,15 +18,22 @@ if(!empty($config_dir)){
         }
     }
 }
-require_once 'core\Helpers.php';
 
-//$data = [
-//    'code' => 'hahaha'
-//];
-//
-//$content = get_template_email($data,'email_verypassword');
-//$mail = new Mailer();
-//$mail->recipients('Ngô Huy','ngohuyst77@gmail.com')->content('Test template', $content)->send();
+require_once __DIR_ROOT__.'/core/Helpers.php';
+
+//use Monolog\Logger;
+//use Logtail\Monolog\LogtailHandler;
+//$token = 'PuGvc5XkDNBjysb2u9fgbZSd';
+//$logger = new Logger("example-app");
+//$logger->pushHandler(new LogtailHandler('PuGvc5XkDNBjysb2u9fgbZSd'));
+
+
+
+//$logger->error("Something bad happened.");
+//$logger->info("Log message with structured logging.", [
+//    "item" => "Orange Soda",
+//    "price" => 100,
+//]);
 
 use App\App;
 $app = new App();

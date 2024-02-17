@@ -65,7 +65,7 @@
                                     <label for="yourUsername" class="form-label">Email</label>
                                     <div class="input-group has-validation">
                                         <span class="input-group-text" id="inputGroupPrepend">@</span>
-                                        <input type="text" name="email" class="form-control"
+                                        <input type="text" name="email" class="form-control" autofocus
                                                value="<?= form_value('email') ?>" id="yourUsername">
                                     </div>
                                     <?= form_errors('email', '<span style="color: red;">', '</span>') ?>

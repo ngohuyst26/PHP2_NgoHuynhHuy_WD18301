@@ -9,6 +9,7 @@
                 <span>Dashboard</span>
             </a>
         </li><!-- End Dashboard Nav -->
+        <?php if (!empty(\Core\Session::data('user')['position_id']) && \Core\Session::data('user')['position_id'] == 1): ?>
         <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
                 <i class="bi bi-menu-button-wide"></i><span>Dự Án</span><i class="bi bi-chevron-down ms-auto"></i>
@@ -62,6 +63,29 @@
                 </li>
             </ul>
         </li><!-- End Tables Nav -->
+        <?php endif; ?>
+
+	    <?php if (!empty(\Core\Session::data('user')['position_id']) && \Core\Session::data('user')['position_id'] == 2): ?>
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-menu-button-wide"></i><span>Dự Án</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="components-nav" class="nav-content collapse <?= ((($url == 'danh-sach-du-an') || ($url == 'da-tham-gia') )?'show':'') ?> " data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a href="/danh-sach-du-an" class="<?= (($url == 'danh-sach-du-an')?'active':'') ?>">
+                            <i class="bi bi-circle"></i><span>Danh sách dự án</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/da-tham-gia" class="<?= (($url == 'da-tham-gia')?'active':'') ?>">
+                            <i class="bi bi-circle"></i><span>Dự án đã tham gia</span>
+                        </a>
+                    </li>
+                </ul>
+            </li><!-- End Components Nav -->
+        <?php endif; ?>
+
+
     </ul>
 
 </aside><!-- End Sidebar-->

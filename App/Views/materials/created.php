@@ -3,26 +3,29 @@
         <h5 class="card-title">Thêm nguyên liệu</h5>
 
         <!-- Vertical Form -->
-        <form class="row g-3">
+        <form class="row g-3" action="/post_create_material" method="post">
             <div class="col-12">
-                <label for="inputNanme4" class="form-label">Tên nguyên liệu</label>
-                <input type="text" class="form-control" id="inputNanme4" placeholder="Tên nguyên liệu">
+                <label for="inputnanme" class="form-label">Tên nguyên liệu</label>
+                <input type="text" name="name" class="form-control" id="inputnanme" placeholder="Tên nguyên liệu">
+                <?= form_errors('name', '<span style="color: red;">', '</span>') ?>
             </div>
             <div class="col-12">
-                <label for="inputNanme4" class="form-label">Số lượng</label>
-                <input type="number" class="form-control" id="inputNanme4" placeholder="Số lượng">
+                <label for="inputunit" class="form-label">Đơn vị</label>
+                <input type="text" name="unit" class="form-control" id="inputunit" placeholder="Đơn vị vd: Bao, cục...">
+                <?= form_errors('unit', '<span style="color: red;">', '</span>') ?>
             </div>
             <div class="col-12">
-                <label for="inputEmail4" class="form-label">Giá trên từng đơn vị</label>
-                <input type="email" class="form-control" id="inputEmail4" placeholder="Giá trên từng đơn vị">
+                <label for="inputprice" class="form-label">Giá trên từng đơn vị</label>
+                <input type="number" name="price" class="form-control" id="inputprice" placeholder="Giá trên từng đơn vị">
+                <?= form_errors('price', '<span style="color: red;">', '</span>') ?>
             </div>
             <div class="col-12">
-                <label for="inputPassword4" class="form-label">Nhà cung cấp</label>
-                <input type="password" class="form-control" id="inputPassword4" placeholder="Nhà cung cấp">
+                <label for="inputsupplier" class="form-label">Nhà cung cấp</label>
+                <input type="text" name="supplier" class="form-control" id="inputsupplier" placeholder="Nhà cung cấp">
+                <?= form_errors('supplier', '<span style="color: red;">', '</span>') ?>
             </div>
             <div class="text-center">
                 <button type="submit" class="btn btn-primary">Thêm</button>
-                <button type="reset" class="btn btn-secondary">Reset</button>
             </div>
         </form><!-- Vertical Form -->
 

@@ -1,11 +1,11 @@
 <?php
 
 use Core\Session;
-
+use Core\Database;
 $sessionKey = Session::isVali();
 $errors = Session::flash($sessionKey . '_errors');
 $value = Session::flash($sessionKey . '_value');
-
+$db = new Database();
 function form_errors($fieldName, $before = '', $after = '')
 {
     global $errors;
@@ -39,7 +39,7 @@ function show_toast($nameToast, $type = 'success', $title = 'Thành công')
     }
 }
 
-function get_template_email($dataEmail = [], $nameTemplate)
+function get_template_email( array $dataEmail, $nameTemplate)
 {
     if (!empty($dataEmail)) {
         if (file_exists(__DIR_ROOT__ . '/App/Views/emailtemp/' . $nameTemplate . '.php')) {
@@ -54,12 +54,64 @@ function get_template_email($dataEmail = [], $nameTemplate)
     }
 }
 
-
-
-
 function set_toast($nameToast, $msg = '')
 {
     if (!empty($nameToast)) {
         Session::flash($nameToast, $msg);
     }
 }
+
+function status_project($status){
+    switch ($status){
+        case 1:
+            return 'badge rounded-pill bg-warning text-dark';
+        case 2:
+            return 'badge rounded-pill bg-primary text-dark';
+        case 3:
+            return 'badge rounded-pill bg-success';
+	    case 4:
+		    return 'badge rounded-pill bg-danger';
+	    default:
+		    return 'badge rounded-pill bg-warning text-dark';
+    }
+}
+
+function position($position)
+{
+    switch ($position){
+        case 1:
+            return 'Quản trị viên';
+        case 2:
+            return 'Khách hàng';
+        case 3:
+            return 'Nhân viên';
+    }
+}
+
+function status_progress($status){
+	switch ($status){
+		case 1:
+			return 'Chuẩn bị';
+		case 2:
+			return 'Đang thực hiện';
+		case 3:
+			return 'Hoàn thành';
+		case 4:
+			return 'Tạm hoãn';
+
+	}
+}
+
+function check_join($user_id,$project_id){
+	global $db;
+	$data = $db->table('project_staff')->where('staff_id', '=',$user_id)->where('project_id','=',$project_id)->select_one();
+	if (!empty($data) && $data['status'] == 1){
+		return 1;
+	}
+	if (!empty($data) && $data['status'] == 2){
+		return 2;
+	}
+	return false;
+}
+
+

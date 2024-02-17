@@ -6,10 +6,13 @@ use App\Middlewares\AuthMiddleware;
 use  App\Models\AutUser;
 use Cassandra\Date;
 use Core\Mailer;
+use Core\Session;
+
 class AuthRepositories extends Repositories
 {
     private $_authModel;
     private $_mail;
+
     public function __construct()
     {
         $this->_mail = new Mailer();
@@ -23,7 +26,7 @@ class AuthRepositories extends Repositories
             $checkPass = password_verify($password, $user['password']);
             if ($checkPass) {
                 unset($user['password']);
-                $_SESSION['user'] = $user;
+                Session::data('user', $user);
                 return true;
             }
         }
@@ -67,16 +70,16 @@ class AuthRepositories extends Repositories
                 $this->_authModel->CodeVery($user['email'], $code_very);
                 $data = [
                     'name' => $user['name'],
-                    'code' =>$code_very
+                    'email' => $user['email'],
+                    'code' => $code_very
                 ];
-                $content = get_template_email($data,'email_verypassword');
-                try {
-                    $this->_mail->recipients($user['name'],$user['email'])->content('MÃ XÁC NHẬN ĐỔI MẬT KHẨU',$content)->send();
-                    set_toast('issendemail','Gữi mã xác nhận thành công');
-                }catch (Exception $e){
-                    set_toast('insendemail','Đã có lỗi sãy ra khi gửi email');
+                $content = get_template_email($data, 'email_verypassword');
+
+                $checkSend = $this->_mail->recipients($user['name'], $user['email'])->content('MÃ XÁC NHẬN ĐỔI MẬT KHẨU', $content)->sending();
+                if ($checkSend) {
+                    set_toast('issendemail', 'Gữi mã xác nhận thành công');
+                    return $user['email'];
                 }
-                return $user['email'];
             }
             return false;
         }
@@ -87,19 +90,20 @@ class AuthRepositories extends Repositories
     {
         if (!empty($email)) {
             $user = $this->checkEmail($email);
-            if(!empty($user)){
+            if (!empty($user)) {
                 $code = trim($code);
-                if ($user['code_very'] == $code){
-                    if(!empty($password)){
-                        $this->_authModel->updatePassword($user['email'],$user['code_very'],$password);
+                if ($user['code_very'] == $code) {
+                    if (!empty($password)) {
+                        $this->_authModel->updatePassword($user['email'], $user['code_very'], $password);
                         date_default_timezone_set('Asia/Ho_Chi_Minh');
-                        $date =  date('Y-m-d:-H-i-s');
+                        $date = date('d-m-Y:H-i-s');
                         $data = [
-                          'name' =>$user['name'],
-                          'date' =>$date
+                            'name' => $user['name'],
+                            'date' => $date
                         ];
-                        $content = get_template_email($data,'email_confirmpassword');
-                        $this->_mail->recipients($user['name'],$user['email'])->content('THÔNG BÁO ĐỔI MẬT KẨU MỚI',$content)->send();
+                        $content = get_template_email($data, 'email_confirmpassword');
+                        $this->_mail->recipients($user['name'], $user['email'])->content('THÔNG BÁO ĐỔI MẬT KHẨU MỚI', $content)->sending();
+                        $this->_authModel->CodeVery($user['email']);
                         return true;
                     }
                 }

@@ -3,26 +3,29 @@
         <h5 class="card-title">Cập nhật nguyên liệu</h5>
 
         <!-- Vertical Form -->
-        <form class="row g-3">
+        <form class="row g-3" action="/post_update_material/<?= (!empty($valueMaterial['id'])?$valueMaterial['id']:false) ?>" method="post">
             <div class="col-12">
-                <label for="inputNanme4" class="form-label">Tên nguyên liệu</label>
-                <input type="text" class="form-control" id="inputNanme4" placeholder="Tên dự án">
+                <label for="inputnanme" class="form-label">Tên nguyên liệu</label>
+                <input type="text" name="name" value="<?= (!empty($valueMaterial['name'])?$valueMaterial['name']:false) ?>" class="form-control" id="inputnanme" placeholder="Tên nguyên liệu">
+                <?= form_errors('name', '<span style="color: red;">', '</span>') ?>
             </div>
             <div class="col-12">
-                <label for="inputNanme4" class="form-label">Số lượng</label>
-                <input type="text" class="form-control" id="inputNanme4" placeholder="Tên dự án">
+                <label for="inputunit" class="form-label">Đơn vị</label>
+                <input type="text" name="unit" value="<?= (!empty($valueMaterial['unit'])?$valueMaterial['unit']:false) ?>" class="form-control" id="inputunit" placeholder="Đơn vị vd: Bao, cục...">
+                <?= form_errors('unit', '<span style="color: red;">', '</span>') ?>
             </div>
             <div class="col-12">
-                <label for="inputEmail4" class="form-label">Giá trên từng đơn vị</label>
-                <input type="email" class="form-control" id="inputEmail4" placeholder="Địa chỉ">
+                <label for="inputprice" class="form-label">Giá trên từng đơn vị</label>
+                <input type="number" name="price" value="<?= (!empty($valueMaterial['price'])?$valueMaterial['price']:false) ?>" class="form-control" id="inputprice" placeholder="Giá trên từng đơn vị">
+                <?= form_errors('price', '<span style="color: red;">', '</span>') ?>
             </div>
             <div class="col-12">
-                <label for="inputPassword4" class="form-label">Nhà cung cấp</label>
-                <input type="password" class="form-control" id="inputPassword4" placeholder="Ngày bắt đầu">
+                <label for="inputsupplier" class="form-label">Nhà cung cấp</label>
+                <input type="text" name="supplier" value="<?= (!empty($valueMaterial['supplier'])?$valueMaterial['supplier']:false) ?>" class="form-control" id="inputsupplier" placeholder="Nhà cung cấp">
+                <?= form_errors('supplier', '<span style="color: red;">', '</span>') ?>
             </div>
             <div class="text-center">
-                <button type="submit" class="btn btn-primary">Thêm</button>
-                <button type="reset" class="btn btn-secondary">Reset</button>
+                <button type="submit" class="btn btn-primary">Cập nhật</button>
             </div>
         </form><!-- Vertical Form -->
 

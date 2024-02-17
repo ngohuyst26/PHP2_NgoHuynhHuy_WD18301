@@ -1,8 +1,6 @@
 <div class="card">
     <div class="card-body">
         <h5 class="card-title">Bảng danh sách nhân viên</h5>
-
-        <!-- Table with hoverable rows -->
         <div class="table-responsive">
             <table class="table table-hover table align-middle ">
                 <thead>
@@ -17,46 +15,43 @@
                 </tr>
                 </thead>
                 <tbody>
+                <?php if(!empty($listStaff)): ?>
+                <?php foreach ($listStaff as $key => $staff): ?>
                 <tr>
-                    <th scope="row">1</th>
-                    <td>Ngô Huỳnh Huy</td>
-                    <td>0819267054</td>
-                    <td>ngohuyst77@gmail.com</td>
-                    <td>Admin</td>
-                    <td>Kỹ Thuật</td>
+                    <th scope="row"><?= $key + 1 ?></th>
+                    <td><?= $staff['name'] ?></td>
+                    <td><?= $staff['phone'] ?></td>
+                    <td><?= $staff['email'] ?></td>
+                    <td><?= position($staff['position_id']) ?></td>
+                    <td><?= (empty($staff['department'])?'Chưa có':$staff['department']) ?></td>
                     <td>
-                        <a href="/nhan-vien/update" type="button" class="btn btn-warning">Chỉnh sửa</a>
-                        <button type="button" class="btn btn-danger">Xóa</button>
+                        <a href="/nhan-vien/detail/<?= $staff['id']?>" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Chi tiết nhân viên"><i class="bi bi-info-circle"></i></a>
+                        <a href="/nhan-vien/update/<?= $staff['id']?>" class="btn btn-warning" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Cập nhật nhân viên"><i class="ri-edit-2-fill"></i></a>
+                        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal<?= $staff['id'] ?>"><i class="bi bi-x-circle"></i></button>
+                        <!--Modal xóa dự án-->
+                        <div class="modal fade" id="deleteModal<?= $staff['id'] ?>" tabindex="-1" aria-hidden="true" style="display: none;">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Xóa nhân viên</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Bạn có chắc là muốn xóa nhân viên "<?= $staff['name'] ?>"
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                        <a href="/nhan-vien/delete/<?= $staff['id'] ?>" type="button" class="btn btn-danger">Xóa</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </td>
                 </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Nguyễn Văn A</td>
-                    <td>0819267055</td>
-                    <td>nguyenvana@gmail.com</td>
-                    <td>Admin</td>
-                    <td>Kỹ Thuật</td>
-                    <td>
-                        <a href="/nhan-vien/update" type="button" class="btn btn-warning">Chỉnh sửa</a>
-                        <button type="button" class="btn btn-danger">Xóa</button>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td>Nguyễn Thị B</td>
-                    <td>0819267056</td>
-                    <td>nguyenthib@gmail.com</td>
-                    <td>Nhân viên</td>
-                    <td>Kỹ Thuật</td>
-                    <td>
-                        <a href="/nhan-vien/update" type="button" class="btn btn-warning">Chỉnh sửa</a>
-                        <button type="button" class="btn btn-danger">Xóa</button>
-                    </td>
-                </tr>
+                <?php endforeach; ?>
+                <?php endif; ?>
                 </tbody>
             </table>
         </div>
-        <!-- End Table with hoverable rows -->
-
     </div>
 </div>

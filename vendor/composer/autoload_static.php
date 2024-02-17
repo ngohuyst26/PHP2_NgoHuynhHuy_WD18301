@@ -21,8 +21,17 @@ class ComposerStaticInit1c5faf9349319dd607ad222367edb285
         ),
         'P' => 
         array (
+            'Psr\\Log\\' => 8,
             'PhpOption\\' => 10,
             'PHPMailer\\PHPMailer\\' => 20,
+        ),
+        'M' => 
+        array (
+            'Monolog\\' => 8,
+        ),
+        'L' => 
+        array (
+            'Logtail\\Monolog\\' => 16,
         ),
         'G' => 
         array (
@@ -55,6 +64,10 @@ class ComposerStaticInit1c5faf9349319dd607ad222367edb285
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-ctype',
         ),
+        'Psr\\Log\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
+        ),
         'PhpOption\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpoption/phpoption/src/PhpOption',
@@ -62,6 +75,14 @@ class ComposerStaticInit1c5faf9349319dd607ad222367edb285
         'PHPMailer\\PHPMailer\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
+        ),
+        'Monolog\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/monolog/monolog/src/Monolog',
+        ),
+        'Logtail\\Monolog\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/logtail/monolog-logtail/src/Monolog',
         ),
         'GrahamCampbell\\ResultType\\' => 
         array (

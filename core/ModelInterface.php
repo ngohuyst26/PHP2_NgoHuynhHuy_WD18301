@@ -14,7 +14,7 @@ interface ModelInterface {
 
     public function find(int $id);
 
-    public function update(array $data=[], $field, $compare, $value);
+    public function update(array $data, $field, $compare, $value);
 
-    public function delete($field, $compare, $value);
+    public function delete(string | int $value, string $field, string $compare);
 }
