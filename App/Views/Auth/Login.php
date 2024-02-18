@@ -71,7 +71,7 @@
                                     <?= form_errors('email', '<span style="color: red;">', '</span>') ?>
                                 </div>
                                 <div class="col-12">
-                                    <label for="yourPassword" class="form-label">Password</label>
+                                    <label for="yourPassword" class="form-label">Mật khẩu</label>
                                     <input type="password" name="password" value="<?= form_value('password') ?>"
                                            class="form-control" id="yourPassword">
                                     <?= form_errors('password', '<span style="color: red;">', '</span>') ?>

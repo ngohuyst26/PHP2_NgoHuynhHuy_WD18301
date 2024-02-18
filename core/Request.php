@@ -126,6 +126,15 @@ class Request
                         }
                     }
 
+	                if ($ruleName == 'number') {
+		                if (!empty($dataField[$nameField])) {
+			                if (!is_int($dataField[$nameField])) {
+				                $this->getError($nameField, $ruleName);
+				                $validate = true;
+			                }
+		                }
+	                }
+
                     if($ruleName == 'match'){
                         if(!empty($rules[1])){
                             if($dataField[$rules[1]] != $dataField[$nameField]){

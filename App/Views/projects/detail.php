@@ -222,13 +222,13 @@
                                     </div>
                                     <div class="col-12 mt-3">
                                         <label for="inputunit" class="form-label">Tiêu đề</label>
-                                        <input type="text" name="title" class="form-control" id="inputunit" placeholder="Tiêu đề">
+                                        <input type="text" name="title" value="<?= form_value('title') ?>" class="form-control" id="inputunit" placeholder="Tiêu đề">
 		                                <?= form_errors('title', '<span style="color: red;">', '</span>') ?>
                                     </div>
                                     <div class="col-12 mt-3">
                                         <label for="inputunit" class="form-label">Nội dung mô tả</label>
                                         <textarea name="description" id="editor" >
-
+                                        <?= form_value('description') ?>
                                         </textarea>
 		                                <?= form_errors('description', '<span style="color: red;">', '</span>') ?>
                                     </div>
@@ -282,7 +282,7 @@
                         <td>
                             <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#updateProgress<?= $progress['id'] ?>"><i class="ri-edit-2-fill"></i></button>
                             <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteProgress<?= $progress['id'] ?>"><i class="bi bi-x-circle"></i></button>
-                            <!--Modal xóa dự án-->
+
                             <div class="modal fade" id="updateProgress<?= $progress['id'] ?>" tabindex="-1" aria-hidden="true" style="display: none;">
                                 <div class="modal-dialog">
                                     <form method="post" action="/update_progress/<?= (!empty($detailProject['id']) ? $detailProject['id'] : false) ?>">
@@ -357,6 +357,124 @@
 
     </div>
 </div>
+<!--Danh sách chờ duyệt-->
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Danh sách nhân viên chờ duyệt</h5>
+        <div class="table-responsive">
+            <table class="table table-hover table align-middle ">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Tên</th>
+                    <th scope="col">Số điện thoại</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Chức vụ</th>
+                    <th scope="col">Bộ phận làm việc</th>
+                    <th scope="col">Hành động</th>
+                </tr>
+                </thead>
+                <tbody>
+				<?php if(!empty($staffJoin)): ?>
+					<?php foreach ($staffJoin as $key => $staff): ?>
+                        <tr>
+                            <th scope="row"><?= $key + 1 ?></th>
+                            <td><?= $staff['name'] ?></td>
+                            <td><?= $staff['phone'] ?></td>
+                            <td><?= $staff['email'] ?></td>
+                            <td><?= position($staff['position_id']) ?></td>
+                            <td><?= (empty($staff['department'])?'Chưa có':$staff['department']) ?></td>
+                            <td>
+                                <a href="/nhan-vien/detail/<?= $staff['id']?>" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Chi tiết nhân viên"><i class="bi bi-info-circle"></i></a>
+                                <a href="/add_staff/<?= $staff['id']?>/<?= (!empty($detailProject['id']) ? $detailProject['id'] : false) ?>" class="btn btn-warning" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Duyệt">Duyệt</a>
+                                <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteStaffJoin<?= $staff['id'] ?>"><i class="bi bi-x-circle"></i></button>
+                                <!--Modal xóa dự án-->
+                                <div class="modal fade" id="deleteStaffJoin<?= $staff['id'] ?>" tabindex="-1" aria-hidden="true" style="display: none;">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Xóa nhân viên</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Bạn có chắc là muốn xóa nhân viên "<?= $staff['name'] ?>"
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                                <a href="/delete_staff_project/<?= $staff['id'] ?>/<?= (!empty($detailProject['id']) ? $detailProject['id'] : false) ?>" type="button" class="btn btn-danger">Xóa</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+					<?php endforeach; ?>
+				<?php endif; ?>
+                </tbody>
+            </table>
+	        <?= (empty($staffJoin)?'<p class="text-center">Không có dữ liệu</p>':false) ?>
+        </div>
+    </div>
+</div>
+
+<!--Danh sách đã tham gia-->
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Danh sách nhân viên đã tham gia</h5>
+        <div class="table-responsive">
+            <table class="table table-hover table align-middle ">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Tên</th>
+                    <th scope="col">Số điện thoại</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Chức vụ</th>
+                    <th scope="col">Bộ phận làm việc</th>
+                    <th scope="col">Hành động</th>
+                </tr>
+                </thead>
+                <tbody>
+				<?php if(!empty($listStaff)): ?>
+					<?php foreach ($listStaff as $key => $staff): ?>
+                        <tr>
+                            <th scope="row"><?= $key + 1 ?></th>
+                            <td><?= $staff['name'] ?></td>
+                            <td><?= $staff['phone'] ?></td>
+                            <td><?= $staff['email'] ?></td>
+                            <td><?= position($staff['position_id']) ?></td>
+                            <td><?= (empty($staff['department'])?'Chưa có':$staff['department']) ?></td>
+                            <td>
+                                <a href="/nhan-vien/detail/<?= $staff['id']?>" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Chi tiết nhân viên"><i class="bi bi-info-circle"></i></a>
+                                <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal<?= $staff['id'] ?>"><i class="bi bi-x-circle"></i></button>
+                                <!--Modal xóa dự án-->
+                                <div class="modal fade" id="deleteModal<?= $staff['id'] ?>" tabindex="-1" aria-hidden="true" style="display: none;">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Xóa nhân viên</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Bạn có chắc là muốn xóa nhân viên "<?= $staff['name'] ?>" khỏi dự án
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                                <a href="/delete_staff_project/<?= $staff['id'] ?>/<?= (!empty($detailProject['id']) ? $detailProject['id'] : false) ?>" type="button" class="btn btn-danger">Xóa</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+					<?php endforeach; ?>
+				<?php endif; ?>
+                </tbody>
+            </table>
+			<?= (empty($listStaff)?'<p class="text-center">Không có dữ liệu</p>':false) ?>
+        </div>
+    </div>
+</div>
 
 <!--Bảng nguyên vật liệu-->
 <div class="card">
@@ -394,7 +512,7 @@
 
                                     <div class="col-12 mt-3">
                                         <label for="inputunit" class="form-label">Số lượng</label>
-                                        <input type="text" name="quantity" class="form-control" id="inputunit" placeholder="Số lượng">
+                                        <input type="text" name="quantity" value="<?= form_value('quantity') ?>" class="form-control" id="inputunit" placeholder="Số lượng">
                                         <?= form_errors('quantity', '<span style="color: red;">', '</span>') ?>
                                     </div>
                                 </div>

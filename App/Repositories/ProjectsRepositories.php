@@ -120,12 +120,24 @@ class ProjectsRepositories
 	public function joinProject($id){
 		if(!empty($id)){
 			$data['project_id'] = $id;
-			$data['staff_id'] = Session::data('user')['position_id'];
+			$data['staff_id'] = Session::data('user')['id'];
 			$this->_projectsModel->joinProject($data);
 		}
 	}
 
 	public function joinList(){
 		return $this->_projectsModel->joinList(Session::data('user')['id']);
+	}
+
+	public function staffJoin($project_id,$status){
+		return $this->_projectsModel->staffJoin($project_id,$status);
+	}
+
+	public function addStaff($staff_id,$project_id){
+		$this->_projectsModel->addStaff($staff_id,$project_id);
+	}
+
+	public function deleteStaff($staff_id,$project_id){
+		$this->_projectsModel->deleteStaff($staff_id,$project_id);
 	}
 }

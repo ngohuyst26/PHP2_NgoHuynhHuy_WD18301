@@ -34,7 +34,6 @@
                 <input type="number" class="form-control" id="inputAddress" name="invest" value="<?= form_value('invest') ?>" placeholder="Vốn đầu tư">
                 <?= form_errors('invest', '<span style="color: red;">', '</span>') ?>
             </div>
-            <input type="file" name="file">
             <div class="text-center">
                 <button type="submit" class="btn btn-primary" name="create">Tạo</button>
                 <button type="reset" class="btn btn-secondary">Reset</button>

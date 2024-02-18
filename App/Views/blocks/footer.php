@@ -71,6 +71,8 @@
     <?= show_toast('isvalid_create_staff')?>
     <?= show_toast('invalid_update_staff','error','Thất bại') ?>
     <?= show_toast('isvalid_update_staff')?>
+    <?= show_toast('invalid_delete_staff_error','error','Thất bại') ?>
+
 
     //Thông báo model nguyên vật liệu
     <?= show_toast('invalid_create_material','error','Thất bại') ?>

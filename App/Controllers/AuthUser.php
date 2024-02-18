@@ -83,7 +83,7 @@ class AuthUser extends Controller
 
     public function login()
     {
-        $this->render('Auth/login', $this->_data);
+        $this->render('Auth/Login', $this->_data);
     }
 
     public function checkUser()

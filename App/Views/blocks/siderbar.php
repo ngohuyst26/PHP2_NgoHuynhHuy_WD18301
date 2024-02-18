@@ -70,9 +70,9 @@
                 <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
                     <i class="bi bi-menu-button-wide"></i><span>Dự Án</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
-                <ul id="components-nav" class="nav-content collapse <?= ((($url == 'danh-sach-du-an') || ($url == 'da-tham-gia') )?'show':'') ?> " data-bs-parent="#sidebar-nav">
+                <ul id="components-nav" class="nav-content collapse <?= ((($url == 'chua-tham-gia') || ($url == 'da-tham-gia') )?'show':'') ?> " data-bs-parent="#sidebar-nav">
                     <li>
-                        <a href="/danh-sach-du-an" class="<?= (($url == 'danh-sach-du-an')?'active':'') ?>">
+                        <a href="/chua-tham-gia" class="<?= (($url == 'chua-tham-gia')?'active':'') ?>">
                             <i class="bi bi-circle"></i><span>Danh sách dự án</span>
                         </a>
                     </li>

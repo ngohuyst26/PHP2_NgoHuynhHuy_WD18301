@@ -82,9 +82,9 @@ function position($position)
         case 1:
             return 'Quản trị viên';
         case 2:
-            return 'Khách hàng';
-        case 3:
             return 'Nhân viên';
+        case 3:
+            return 'Khách hàng';
     }
 }
 

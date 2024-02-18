@@ -113,4 +113,21 @@ class Projects extends Model
 				->table('project_staff')->innerJoin('projects','project_staff.project_id = projects.id')
 				->where('project_staff.staff_id','=',$staff_id)->where('project_staff.status','=',2)->select();
 	}
+
+	public function addStaff($staff_id,$project_id){
+		$this->db->table('project_staff')->where('project_id','=',$project_id)->where('staff_id','=',$staff_id)
+			->updateQuery(['status' => 2]);
+	}
+
+	public function staffJoin($project_id,$status){
+		return $this->db->table('staff')->field('staff.id ,staff.name as name, staff.phone as phone,
+				staff.email as email, staff.department as deparment, staff.position_id')
+				->innerJoin('project_staff','project_staff.staff_id = staff.id')
+				->where('project_staff.project_id', '=', $project_id)
+				->where('project_staff.status','=',$status)->select();
+	}
+
+	public function deleteStaff($staff_id,$project_id){
+		$this->db->table('project_staff')->where('project_id','=',$project_id)->deleteQuery($staff_id,'staff_id','=');
+	}
 }

@@ -20,7 +20,7 @@
                 <th scope="row"><?= $key + 1 ?></th>
                 <td><?= $material['name'] ?></td>
                 <td><?= $material['unit'] ?></td>
-                <td><?= $material['price'].'/'.$material['unit'] ?></td>
+                <td><?= number_format($material['price'],0,',','.').' VNĐ/'.$material['unit'] ?></td>
                 <td><?= $material['supplier'] ?></td>
                 <td>
                     <a href="/vat-lieu/update/<?= $material['id']?>" class="btn btn-warning" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Cập nhật vật liệu"><i class="ri-edit-2-fill"></i></a>

@@ -16,7 +16,7 @@ class RedirectAuth extends Middleware
     public function handel()
     {
         if(!empty(Session::data('user'))){
-            $this->_response->redirect('du-an');
+            $this->_response->redirect('dashboard');
         }
     }
 }

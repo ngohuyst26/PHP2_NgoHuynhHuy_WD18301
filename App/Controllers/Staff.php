@@ -7,6 +7,7 @@ use Core\Controller;
 use App\Models\Staff as staffModel;
 use Core\Request;
 use Core\Response;
+use Core\Session;
 
 class Staff extends Controller
 {
@@ -38,7 +39,6 @@ class Staff extends Controller
     public function updateStaff($id)
     {
         if (!empty($id)) {
-            $id = reset($id);
             $data = $this->_repo->getOneStaff($id);
             if (!empty($data)) {
                 $this->data['valueStaff'] = $data;
@@ -56,7 +56,6 @@ class Staff extends Controller
     public function postUpdateStaff($id)
     {
         if ($this->_request->isPost() && !empty($id) ) {
-            $id = reset($id);
             $check = $this->_repo->getOneStaff($id);
             $field = $this->_request->getField();
             if($check){
@@ -165,6 +164,9 @@ class Staff extends Controller
 
 
     public function detailStaff($id){
+		if(!empty($id)){
+			$this->data['detailStaff'] = $this->_repo->getOneStaff($id);
+		}
         $this->data['title'] = 'Chi tiết nhân viên';
         $this->data['active']['url'] = $this->active;
         $this->data['content'] = 'staff/detail';
@@ -175,8 +177,11 @@ class Staff extends Controller
     public function deleteStaff($id)
     {
         if (!empty($id)) {
-            $id = reset($id);
-            $this->_repo->deleteStaff($id);
+			if(Session::data('user')['id'] == $id){
+				set_toast('invalid_delete_staff_error','Bạn không thể xóa chính mình !');
+				$this->_response->redirect('nhan-vien/list');
+			}
+	        $this->_repo->deleteStaff($id);
         }
         $this->_response->redirect('nhan-vien/list');
 

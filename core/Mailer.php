@@ -23,8 +23,8 @@ class Mailer{
         $this->_mail->Host = 'sandbox.smtp.mailtrap.io';
         $this->_mail->SMTPAuth = true;
         $this->_mail->Port = 2525;
-        $this->_mail->Username = '97590de016b16c';
-        $this->_mail->Password = '592b7ab31ce457';
+        $this->_mail->Username = '2e3e88159e615d';
+        $this->_mail->Password = 'd817c60fc19e6b';
     }
 
     private function configMailGoogle(){

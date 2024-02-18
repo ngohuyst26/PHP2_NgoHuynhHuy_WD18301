@@ -29,7 +29,6 @@ abstract class Model extends Database implements ModelInterface {
         $mark = trim($mark, ',');
         $field = trim($field, ',');
         $value = trim($value, ',');
-//        preg_match_all("/'(.*?)'/",$value,$valueString);
         $sql = "INSERT INTO $tableName ($field) VALUES ($mark)";
         $this->db->pdo_execute($sql, $value);
     }

@@ -47,7 +47,7 @@
 					'address' => 'required',
 					'start_date' => 'required',
 					'end_date' => 'required',
-					'invest' => 'required|callback_minInvest'
+					'invest' => 'required|callback_minInvest|number'
 				]);
 				$this->request->message([
 					'name.required' => 'Không được để trống',
@@ -59,6 +59,7 @@
 					'start_date.required' => 'Ngày bắt đầu không được   bỏ trống',
 					'end_date.required' => 'Ngày kết thúc không được để trống',
 					'invest.required' => 'Không được để trống',
+					'invest.number' => 'Không hợp lệ',
 					'invest.callback_minInvest' => 'Không được nhỏ hơn 1 củ'
 				]);
 				if ($this->request->validate()) {
@@ -92,7 +93,11 @@
 					$material = $this->_repoMaterial->getAllMaterial();
 					$listMaterial = $this->_repo->getMaterialProject($id);
 					$listProgress = $this->_repo->getListProgress($id);
+					$staffJoin = $this->_repo->staffJoin($id,1);
+					$listStaff = $this->_repo->staffJoin($id,2);
 
+					$this->data['listStaff'] = $listStaff;
+					$this->data['staffJoin'] = $staffJoin;
 					$this->data['listProgress'] = $listProgress;
 					$this->data['materialProject'] = $listMaterial;
 					$this->data['listMaterial'] = $material;
@@ -114,13 +119,14 @@
 				$this->request->rule([
 					'project_id' => 'required',
 					'materials_id' => 'required',
-					'quantity' => 'required|callback_minQuantity'
+					'quantity' => 'required|callback_minQuantity|number'
 				]);
 
 				$this->request->message([
 					'project_id.required' => 'Id không tồn tại',
 					'materials_id.required' => 'Vui lòng chọn nguyên vật liệu',
 					'quantity.required' => 'Số lượng không được để trống',
+					'quantity.number' => 'Không hợp lệ',
 					'quantity.callback_minQuality' => 'Số lượng phải lớn hơn 0'
 				]);
 				if ($this->request->validate()) {
@@ -145,13 +151,14 @@
 					$this->request->rule([
 						'id' => 'required',
 						'material_id' => 'required',
-						'quantity' => 'required|callback_minQuantity'
+						'quantity' => 'required|callback_minQuantity|number'
 					]);
 
 					$this->request->message([
 						'id.required' => 'Id không tồn tại',
 						'material_id.required' => 'Id vật liệu không tồn tại',
 						'quantity.required' => 'Số lượng không được để trống',
+						'quantity.number' => 'Không hợp lệ',
 						'quantity.callback_minQuality' => 'Số lượng phải lớn hơn 0'
 					]);
 
@@ -174,6 +181,7 @@
 		{
 			if ($this->request->isPost()) {
 				$field = $this->request->getField();
+
 				$this->request->rule([
 					'time' => 'required',
 					'title' => 'required',
@@ -293,7 +301,7 @@
 						'address' => 'required',
 						'start_date' => 'required',
 						'end_date' => 'required',
-						'invest' => 'required|callback_minInvest'
+						'invest' => 'required|callback_minInvest|number'
 					]);
 					$this->request->message([
 						'name.required' => 'Không được để trống',
@@ -305,6 +313,7 @@
 						'start_date.required' => 'Ngày bắt đầu không được   bỏ trống',
 						'end_date.required' => 'Ngày kết thúc không được để trống',
 						'invest.required' => 'Không được để trống',
+						'invest.number' => 'Không hợp lệ',
 						'invest.callback_minInvest' => 'Không được nhỏ hơn 1 củ'
 					]);
 					if ($this->request->validate()) {
@@ -351,7 +360,7 @@
 		public function joinProjects($id){
 			if(!empty($id)){
 				$this->_repo->joinProject($id);
-				$this->_response->redirect('danh-sach-du-an');
+				$this->_response->redirect('chua-tham-gia');
 			}
 		}
 
@@ -375,6 +384,21 @@
 				}
 			}
 			$this->_response->redirect('du-an/list');
+		}
+
+		public function addStaff($staff_id,$project_id){
+			if(!empty($staff_id) && !empty($project_id)){
+				$this->_repo->addStaff($staff_id,$project_id);
+				$this->_response->redirect("du-an/detail/$project_id");
+			}
+			$this->_response->redirect("du-an/list");
+		}
+
+		public function deleteStaffProject($staff_id,$project_id){
+			if(!empty($staff_id)){
+				$this->_repo->deleteStaff($staff_id,$project_id);
+				$this->_response->redirect("du-an/detail/$project_id");
+			}
 		}
 
 		public function minInvest($value)

@@ -50,7 +50,7 @@ class Material extends Controller
             $this->_request->rule([
                 'name' => 'required',
                 'unit' => 'required',
-                'price' => 'required|callback_checkPrice',
+                'price' => 'required|callback_checkPrice|number',
                 'supplier' => 'required'
             ]);
 
@@ -59,6 +59,7 @@ class Material extends Controller
                 'unit.required' => 'Đơn vị không được để trống',
                 'price.required' => 'Giá không được để trống',
                 'price.callback_checkPrice' => 'Giá phải lớn hơn 0',
+	            'price.number' => 'Giá không hợp lệ',
                 'supplier.required' => 'Nhà cung cấp không được để trống'
             ]);
 
@@ -79,7 +80,6 @@ class Material extends Controller
     public function updateMaterial($id)
     {
         if(!empty($id)){
-            $id =  reset($id);
             $data = $this->_repo->getOneMaterial($id);
             if(!empty($data)){
                 $this->data['valueMaterial'] = $data;
@@ -96,12 +96,11 @@ class Material extends Controller
     public function postUpdateMaterial($id){
         if($this->_request->isPost()){
             if(!empty($id)){
-                $id = reset($id);
                 $field = $this->_request->getField();
                 $this->_request->rule([
                     'name' => 'required',
                     'unit' => 'required',
-                    'price' => 'required|callback_checkPrice',
+                    'price' => 'required|callback_checkPrice|number',
                     'supplier' => 'required'
                 ]);
 
@@ -110,6 +109,7 @@ class Material extends Controller
                     'unit.required' => 'Đơn vị không được để trống',
                     'price.required' => 'Giá không được để trống',
                     'price.callback_checkPrice' => 'Giá phải lớn hơn 0',
+	                'price.number' => 'Giá không hợp lệ',
                     'supplier.required' => 'Nhà cung cấp không được để trống'
                 ]);
 
@@ -130,7 +130,6 @@ class Material extends Controller
 
     public function deleteMaterial($id){
         if(!empty($id)){
-            $id = reset($id);
             $this->_repo->deleteMaterial($id);
             set_toast('isvalid_delete_material','Xóa thành công');
             $this->_response->redirect('vat-lieu/list');
